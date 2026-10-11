@@ -12,6 +12,7 @@ import {
   ShieldCheck,
   Database,
   Headset,
+  ArrowUpRight,
   Building2,
   House,
   Target,
@@ -62,9 +63,10 @@ gsap.registerPlugin(ScrollTrigger)
 /* ----------------------------------------------------------------
    Constants / Content
 ---------------------------------------------------------------- */
-const PHONE = '+45 70 70 12 34'
-const PHONE_HREF = 'tel:+4570701234'
-const EMAIL = 'hej@biq.dk'
+const PHONE = '+45 70 25 50 65'
+const PHONE_HREF = 'tel:+4570255065'
+const EMAIL = 'info@biq.dk'
+const ADDRESS = 'Borgergade 24B, 4. sal, 1300 København K'
 
 const NAV_LINKS = [
   { label: 'Platform', href: '#platform' },
@@ -1331,42 +1333,41 @@ function Modules() {
 
 /* ----------------------------------------------------------------
    Social proof — logo marquee + testimonials
-   PLACEHOLDER: kunder, citater og tal er eksempler. Erstat med rigtige
-   (og godkendte) kundecases før lancering.
+   Kunder og citater er hentet fra biq.dk.
 ---------------------------------------------------------------- */
 const CUSTOMER_LOGOS = [
-  { name: 'Nordlys Byg', I: Hammer },
-  { name: 'Havnens Kaffe', I: Coffee },
-  { name: 'Fjordtech', I: Cpu },
-  { name: 'Vestvind Revision', I: Calculator },
-  { name: 'Bølge Finans', I: Waves },
-  { name: 'Grønspir Energi', I: Sprout },
-  { name: 'Ankerhus Ejendomme', I: Anchor },
-  { name: 'Kystlinje Logistik', I: Truck },
-]
+  'Alm. Brand',
+  'Norlys',
+  'Q8 Danmark',
+  'Stark',
+  'Kræftens Bekæmpelse',
+  'Sygeforsikringen Danmark',
+  'Ældre Sagen',
+  'DLA Piper Denmark',
+  'Gribskov Kommune',
+  'Nellemann Leasing',
+  'Hillerød Forsyning',
+  'EnergiFyn',
+].map((name) => ({ name, I: Building2 }))
 
 const TESTIMONIALS = [
   {
     quote:
-      'Vi brugte før en hel dag om ugen på at bygge leadlister. Nu tager det ti minutter — og listerne er markant bedre.',
-    name: 'Camilla Vestergaard',
-    role: 'Salgschef',
-    company: 'Nordlys Byg',
-    metric: '+38%',
-    metricLabel: 'flere bookede møder på et halvt år',
-  },
-  {
-    quote: 'Overvågningen er guld værd. Vi hører om ejerskifter hos vores klienter, før de selv når at ringe.',
-    name: 'Mikkel Brandt',
-    role: 'Partner',
-    company: 'Vestvind Revision',
+      'Deres system har markant styrket vores evne til at vurdere kunders risikoprofil, hvilket er afgørende for vores daglige opgaver. Vi sparer betydelig tid, da søgeværktøjerne er tilpasset præcis til vores behov.',
+    company: 'Nellemann Leasing A/S',
+    product: 'BiQ Risk',
   },
   {
     quote:
-      'BiQ giver kreditafdelingen ét samlet billede af koncerner og ejere. Vores vurderinger er blevet både hurtigere og skarpere.',
-    name: 'Line Kjær',
-    role: 'Head of Credit',
-    company: 'Bølge Finans',
+      'Vi bruger både BiQ Insight, BiQ Search og BiQ Compliance. Disse systemer er en stor del af vores proces i forbindelse med vurdering af nye og eksisterende kunder, både privat og erhverv.',
+    company: 'Q8 Danmark A/S',
+    product: 'BiQ Insight · Search · Compliance',
+  },
+  {
+    quote:
+      'BiQ er en uundværlig ressource i vores daglige arbejde. Den omfattende dataadgang og det brugervenlige overblik gør det let at få de nødvendige oplysninger hurtigt og præcist.',
+    company: 'DreistStorgaard Advokater A/S',
+    product: 'BiQ Insight',
   },
 ]
 
@@ -1427,32 +1428,24 @@ function SocialProof() {
             </blockquote>
             <div className="relative mt-10 flex flex-col sm:flex-row sm:items-end justify-between gap-8">
               <figcaption className="flex items-center gap-3">
-                <Initials name={featured.name} dark />
+                <Initials name={featured.company} dark />
                 <span>
-                  <span className="block font-semibold">{featured.name}</span>
-                  <span className="block text-sm text-white/60">
-                    {featured.role}, {featured.company}
-                  </span>
+                  <span className="block font-semibold">{featured.company}</span>
+                  <span className="block text-sm text-white/60">{featured.product}</span>
                 </span>
               </figcaption>
-              <div className="sm:text-right">
-                <p className="text-5xl font-semibold tracking-tight text-accent">{featured.metric}</p>
-                <p className="mt-1 text-xs text-white/60 sm:max-w-[15rem] sm:ml-auto">{featured.metricLabel}</p>
-              </div>
             </div>
           </figure>
 
           <div className="grid gap-6">
             {rest.map((t) => (
-              <figure key={t.name} className="reveal rounded-3xl bg-white border border-divider p-7 sm:p-8 flex flex-col justify-between">
+              <figure key={t.company} className="reveal rounded-3xl bg-white border border-divider p-7 sm:p-8 flex flex-col justify-between">
                 <blockquote className="text-[15px] text-ink leading-relaxed">“{t.quote}”</blockquote>
                 <figcaption className="mt-6 flex items-center gap-3">
-                  <Initials name={t.name} />
+                  <Initials name={t.company} />
                   <span>
-                    <span className="block text-sm font-semibold text-ink">{t.name}</span>
-                    <span className="block text-xs text-muted">
-                      {t.role}, {t.company}
-                    </span>
+                    <span className="block text-sm font-semibold text-ink">{t.company}</span>
+                    <span className="block text-xs text-muted">{t.product}</span>
                   </span>
                 </figcaption>
               </figure>
@@ -1465,70 +1458,66 @@ function SocialProof() {
 }
 
 /* ----------------------------------------------------------------
-   Webinars — upcoming (with countdown + inline signup) / on-demand
-   PLACEHOLDER: datoer, titler og talere er eksempler.
+   Webinars — upcoming with countdown. Data fra biq.dk/biqs-loesninger/webinarer/
+   Tilmelding sker på biq.dk's eventsider.
 ---------------------------------------------------------------- */
+const WEBINARS_URL = 'https://biq.dk/biqs-loesninger/webinarer/'
+
 const WEBINARS = [
   {
     id: 'w1',
     start: '2026-10-22T10:00:00+02:00',
     dur: '45 min.',
-    title: 'Find dine næste 100 kunder med BiQ',
-    desc: 'Vi bygger et segment fra bunden, beriger det med kontaktdata og sender det direkte til CRM — live.',
-    speaker: 'Anders Holm',
-    speakerRole: 'Customer Success, BiQ',
-    tag: 'Salg',
+    title: 'Effektiv risikovurdering med BiQ Risk – spar tid og minimér tab',
+    desc: 'Se hvordan BiQ Risk afdækker risikoadfærd hos nye og eksisterende kunder ud fra mere end 80 opmærksomhedspunkter — og hvordan du automatiserer vurderingen.',
+    speaker: 'Martin Willadsen',
+    speakerRole: 'BiQ A/S',
+    tag: 'BiQ Risk',
+    url: 'https://biq.dk/events/biq-risk-22-oktober-2/',
   },
   {
     id: 'w2',
-    start: '2026-11-05T14:00:00+01:00',
-    dur: '60 min.',
-    title: 'Kreditvurdering med regnskabsdata: spot advarselstegnene',
-    desc: 'Sådan bruger du nøgletal, koncernforhold og ejerhistorik til at vurdere risiko hurtigere.',
-    speaker: 'Sofie Lauridsen',
-    speakerRole: 'Dataanalytiker, BiQ',
-    tag: 'Finans',
+    start: '2026-11-12T10:00:00+01:00',
+    dur: '1 t. 15 min.',
+    title: 'BiQ Insight online demo – få fuld kontrol over dine forretningsdata',
+    desc: 'En komplet gennemgang af BiQ Insight: søg på tværs af virksomheder, personer og ejendomme, og se netværk, ejerstrukturer og nøgletal. Til KYC, AML, kreditvurdering og efterforskning.',
+    speaker: 'Steen Hansen',
+    speakerRole: 'Product Owner, BiQ Insight & Compliance',
+    tag: 'BiQ Insight',
+    url: 'https://biq.dk/events/biq-insight-online-demo-12-november/',
   },
   {
     id: 'w3',
-    start: '2026-11-19T09:30:00+01:00',
+    start: '2026-12-03T10:00:00+01:00',
     dur: '30 min.',
-    title: 'Fra BiQ til CRM: automatisér din leadproces',
-    desc: 'Opsæt integrationen til HubSpot, Salesforce eller Pipedrive på under en halv time.',
-    speaker: 'Jakob Winther',
-    speakerRole: 'Integrationsansvarlig, BiQ',
-    tag: 'Integration',
+    title: 'BiQ Compliance online demo – markedets bedste PEP- og RCA-tjek',
+    desc: 'Sådan lever du op til hvidvaskloven med PEP- og RCA-tjek, sanktionslister og effektiv KYC — med adgang til over 12.000 RCA-registreringer.',
+    speaker: 'Steen Hansen',
+    speakerRole: 'Product Owner, BiQ Insight & Compliance',
+    tag: 'BiQ Compliance',
+    url: 'https://biq.dk/events/biq-compliance-online-demo-3-december/',
   },
   {
     id: 'w4',
-    start: '2026-12-03T13:00:00+01:00',
+    start: '2026-12-09T10:00:00+01:00',
     dur: '45 min.',
-    title: 'Ejendomsdata for begyndere: BBR, tinglysning og vurderinger',
-    desc: 'En praktisk gennemgang af de vigtigste ejendomsregistre — og hvad du kan bruge dem til.',
-    speaker: 'Anders Holm',
-    speakerRole: 'Customer Success, BiQ',
-    tag: 'Ejendomme',
-  },
-]
-
-const ON_DEMAND = [
-  {
-    title: 'BiQ på 20 minutter: en rundtur i platformen',
-    dur: '21 min.',
-    tag: 'Introduktion',
-    img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=75',
+    title: 'Effektiv risikovurdering med BiQ Risk – spar tid og minimér tab',
+    desc: 'Se hvordan BiQ Risk afdækker risikoadfærd hos nye og eksisterende kunder ud fra mere end 80 opmærksomhedspunkter — og hvordan du automatiserer vurderingen.',
+    speaker: 'Martin Willadsen',
+    speakerRole: 'BiQ A/S',
+    tag: 'BiQ Risk',
+    url: 'https://biq.dk/events/biq-risk-9-december/',
   },
   {
-    title: 'Sådan bygger du det perfekte segment',
-    dur: '34 min.',
-    tag: 'Salg',
-    img: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=75',
-  },
-  {
-    title: 'Overvågning: vær først, når noget ændrer sig',
-    dur: '28 min.',
-    tag: 'Følg',
-    img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=75',
+    id: 'w5',
+    start: '2026-12-17T10:00:00+01:00',
+    dur: '1 t. 15 min.',
+    title: 'BiQ Insight online demo – få fuld kontrol over dine forretningsdata',
+    desc: 'En komplet gennemgang af BiQ Insight: søg på tværs af virksomheder, personer og ejendomme, og se netværk, ejerstrukturer og nøgletal. Til KYC, AML, kreditvurdering og efterforskning.',
+    speaker: 'Steen Hansen',
+    speakerRole: 'Product Owner, BiQ Insight & Compliance',
+    tag: 'BiQ Insight',
+    url: 'https://biq.dk/events/biq-insight-online-demo-17-december/',
   },
 ]
 
@@ -1568,64 +1557,23 @@ function Countdown({ to }) {
   )
 }
 
-function SignupInline({ id, registered, onRegister, dark }) {
-  const [open, setOpen] = useState(false)
-  const [email, setEmail] = useState('')
-  const [sending, setSending] = useState(false)
-
-  if (registered) {
-    return (
-      <span className={`inline-flex items-center gap-1.5 text-sm font-semibold ${dark ? 'text-accent' : 'text-accent-dark'}`}>
-        <CheckCircle2 className="h-4 w-4" /> Du er tilmeldt
-      </span>
-    )
-  }
-  if (!open) {
-    return (
-      <button onClick={() => setOpen(true)} className={dark ? 'btn-primary !bg-accent !text-primary hover:!bg-white' : 'btn-primary !py-2.5'}>
-        Tilmeld gratis
-      </button>
-    )
-  }
+function SignupLink({ url, dark }) {
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault()
-        if (!email) return
-        setSending(true)
-        // Simulated signup
-        setTimeout(() => onRegister(id), 900)
-      }}
-      className="flex w-full sm:w-auto gap-2"
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={dark ? 'btn-primary !bg-accent !text-primary hover:!bg-white' : 'btn-primary !py-2.5'}
     >
-      <input
-        type="email"
-        required
-        autoFocus
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Din arbejdsmail"
-        aria-label="Arbejdsmail"
-        className={`min-w-0 flex-1 sm:w-56 rounded-lg px-3 py-2.5 text-sm outline-none transition focus:ring-4 ${
-          dark
-            ? 'bg-white/10 border border-white/20 text-white placeholder-white/40 focus:ring-accent/30'
-            : 'bg-background border border-divider text-ink placeholder-muted/60 focus:border-accent-dark focus:ring-accent/25'
-        }`}
-      />
-      <button type="submit" disabled={sending} className={`${dark ? 'btn-primary !bg-accent !text-primary' : 'btn-primary'} !py-2.5 disabled:opacity-60`}>
-        {sending ? '...' : 'Bekræft'}
-      </button>
-    </form>
+      Tilmeld dig gratis <ArrowUpRight className="h-4 w-4" />
+    </a>
   )
 }
 
 function Webinars() {
-  const [tab, setTab] = useState('upcoming')
-  const [registered, setRegistered] = useState(() => new Set())
   const now = useNow(60000)
   const upcoming = WEBINARS.filter((w) => new Date(w.start).getTime() > now)
   const [next, ...later] = upcoming
-  const register = (id) => setRegistered((prev) => new Set(prev).add(id))
 
   return (
     <section id="webinarer" className="py-24 sm:py-32">
@@ -1637,29 +1585,16 @@ function Webinars() {
               Gratis online sessioner, hvor vi viser, hvordan du får mest ud af data — live eller når det passer dig.
             </p>
           </div>
-          <div role="tablist" className="inline-flex self-start md:self-auto rounded-lg bg-white border border-divider p-1">
-            {[
-              ['upcoming', `Kommende (${upcoming.length})`],
-              ['ondemand', `Optagelser (${ON_DEMAND.length})`],
-            ].map(([key, label]) => (
-              <button
-                key={key}
-                role="tab"
-                aria-selected={tab === key}
-                onClick={() => setTab(key)}
-                className={`rounded-md px-4 py-2 text-sm font-semibold transition ${
-                  tab === key ? 'bg-primary text-white shadow-sm' : 'text-muted hover:text-ink'
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+          <a href={WEBINARS_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 self-start md:self-auto text-sm font-semibold text-ink hover:text-accent-dark transition">
+            Alle webinarer på biq.dk <ArrowUpRight className="h-4 w-4" />
+          </a>
         </div>
 
-        {tab === 'upcoming' ? (
-          upcoming.length === 0 ? (
-            <p className="mt-12 text-muted">Der er ingen planlagte webinarer lige nu — se optagelserne i mellemtiden.</p>
+        {upcoming.length === 0 ? (
+            <p className="mt-12 text-muted">
+              Der er ingen planlagte webinarer lige nu — se{' '}
+              <a href={WEBINARS_URL} className="font-semibold text-ink underline">biq.dk</a> for nye datoer.
+            </p>
           ) : (
             <div key="upcoming" className="mt-12 grid lg:grid-cols-[1fr_1.35fr] gap-6" style={{ animation: 'fade-up 0.4s ease-out' }}>
               {/* Next webinar — featured */}
@@ -1687,7 +1622,7 @@ function Webinars() {
                   <Countdown to={next.start} />
                 </div>
                 <ul className="relative mt-6 grid sm:grid-cols-3 gap-2 text-xs text-white/75">
-                  {['Live demo & Q&A', 'Optagelse bagefter', 'Gratis deltagelse'].map((b) => (
+                  {['Live demo & Q&A', 'Online', '100 % uforpligtende'].map((b) => (
                     <li key={b} className="flex items-center gap-1.5">
                       <CheckCircle2 className="h-3.5 w-3.5 text-accent shrink-0" /> {b}
                     </li>
@@ -1701,7 +1636,7 @@ function Webinars() {
                       <span className="block text-xs text-white/55">{next.speakerRole}</span>
                     </span>
                   </span>
-                  <SignupInline id={next.id} registered={registered.has(next.id)} onRegister={register} dark />
+                  <SignupLink url={next.url} dark />
                 </div>
               </article>
 
@@ -1727,7 +1662,7 @@ function Webinars() {
                           {w.speaker} · {w.speakerRole}
                         </p>
                         <div className="mt-4">
-                          <SignupInline id={w.id} registered={registered.has(w.id)} onRegister={register} />
+                          <SignupLink url={w.url} />
                         </div>
                       </div>
                     </article>
@@ -1735,37 +1670,12 @@ function Webinars() {
                 })}
                 <div className="p-6 sm:p-7 flex items-center justify-between gap-4 bg-accent-soft/60 rounded-b-3xl">
                   <span className="flex items-center gap-2 text-sm text-muted">
-                    <Video className="h-4 w-4 text-accent-dark" /> Alle webinarer afholdes online og optages.
+                    <Video className="h-4 w-4 text-accent-dark" /> Alle webinarer afholdes online og er gratis og 100 % uforpligtende.
                   </span>
                 </div>
               </div>
             </div>
-          )
-        ) : (
-          <div key="ondemand" className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6" style={{ animation: 'fade-up 0.4s ease-out' }}>
-            {ON_DEMAND.map((v) => (
-              <a key={v.title} href="#kontakt" className="group rounded-3xl bg-white border border-divider overflow-hidden hover:border-accent hover:shadow-xl hover:shadow-primary/5 transition">
-                <div className="relative aspect-video overflow-hidden bg-primary">
-                  <img src={v.img} alt="" loading="lazy" className="h-full w-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/70 to-primary/10" />
-                  <span className="absolute inset-0 flex items-center justify-center">
-                    <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 shadow-xl transition-transform group-hover:scale-110">
-                      <Play className="h-5 w-5 text-primary translate-x-0.5" fill="currentColor" />
-                    </span>
-                  </span>
-                  <span className="absolute bottom-3 right-3 rounded-md bg-primary/80 px-2 py-0.5 text-[11px] font-semibold text-white">{v.dur}</span>
-                </div>
-                <div className="p-6">
-                  <span className="rounded-full bg-accent-light px-2.5 py-0.5 text-[11px] font-semibold text-primary">{v.tag}</span>
-                  <h3 className="mt-3 font-semibold text-ink leading-snug">{v.title}</h3>
-                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-ink">
-                    Se optagelse <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </span>
-                </div>
-              </a>
-            ))}
-          </div>
-        )}
+          )}
       </div>
     </section>
   )
@@ -1795,7 +1705,7 @@ function ContactForm() {
   const contactRows = [
     { Icon: Phone, label: 'Ring direkte', value: PHONE, href: PHONE_HREF },
     { Icon: Mail, label: 'Skriv til', value: EMAIL, href: `mailto:${EMAIL}` },
-    { Icon: MapPin, label: 'Hovedkontor', value: 'København, Danmark' },
+    { Icon: MapPin, label: 'Hovedkontor', value: ADDRESS },
     { Icon: Clock, label: 'Support', value: 'Hverdage 8–17' },
   ]
 
@@ -1947,7 +1857,7 @@ function Footer() {
             <p className="mt-5 text-white/60 text-sm leading-relaxed max-w-xs">
               Dansk erhvervs- og ejendomsdata samlet på én platform — så du kan træffe bedre beslutninger.
             </p>
-            <p className="text-xs text-white/35 mt-6">CVR: 00 00 00 00</p>
+            <p className="text-xs text-white/35 mt-6">BiQ A/S · CVR: 25 72 90 13</p>
           </div>
 
           <div>
@@ -1979,7 +1889,7 @@ function Footer() {
             <ul className="space-y-2.5">
               <li><a href={PHONE_HREF} className="text-white/70 hover:text-white transition text-sm">{PHONE}</a></li>
               <li><a href={`mailto:${EMAIL}`} className="text-white/70 hover:text-white transition text-sm">{EMAIL}</a></li>
-              <li className="text-white/70 text-sm">København, DK</li>
+              <li className="text-white/70 text-sm">{ADDRESS}</li>
             </ul>
           </div>
         </div>
