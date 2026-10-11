@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    @apply bg-background text-ink font-body;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background-color: #8BB9C8;
+    color: #123448;
+  }
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #F5F7F9; }
+  ::-webkit-scrollbar-thumb { background: #C4DCE3; border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: #8BB9C8; }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-white shadow-sm shadow-primary/20 transition hover:bg-primary-dark active:scale-[0.98];
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-white px-5 py-3 text-sm font-semibold text-ink border border-divider transition hover:border-accent active:scale-[0.98];
+  }
+  .btn-muted {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-[#EDF1F4] px-4 py-2 text-sm font-semibold text-ink transition hover:bg-accent-light;
+  }
+
+  .lift-on-hover {
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .lift-on-hover:hover { transform: translateY(-2px); }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(18, 52, 72, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(18, 52, 72, 0.045) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .scrollbar-hide { scrollbar-width: none; }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+
+  /* Scroll reveal (driven by GSAP ScrollTrigger.batch) */
+  .reveal { opacity: 0; transform: translateY(24px); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; }
+  .animate-marquee { animation: none; }
+}
