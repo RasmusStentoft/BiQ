@@ -1395,7 +1395,7 @@ function SocialProof() {
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
         <div className="reveal flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-ink max-w-2xl">
-            Mere end <CountUp target={1200} format /> virksomheder træffer bedre beslutninger med BiQ
+            Mere end <CountUp target={700} format /> virksomheder træffer bedre beslutninger med BiQ
           </h2>
           <p className="text-muted max-w-sm lg:text-right">
             Fra lokale håndværkere til banker og revisionshuse — over hele landet.
